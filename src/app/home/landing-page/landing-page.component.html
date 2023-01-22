@@ -1,0 +1,82 @@
+<ibm-select #weeks (change)="selectWeek(weeks.value)" label="Week">
+    <option *ngFor="let item of [].constructor(38); let i = index" [value]="i+1">{{i+1}}</option>
+</ibm-select>
+<!--
+<ibm-table [model]="model" [size]="'md'" [showSelectionColumn]=false
+		[striped]="true" [skeleton]=false [isDataGrid]=false [sortAscendingLabel]="'true'"
+		[sortDescendingLabel]="'true'">
+</ibm-table>
+-->
+<table ibmTable [sortable]="false" style="width: 100%;">
+    <thead ibmTableHead>
+        <tr>
+            <th
+                scope="col"
+                *ngFor="let column of columns$ | async"
+                >{{column}}
+            </th>
+        </tr>
+    </thead>
+    <tbody ibmTableBody>
+        <tr
+            *ngFor="let fixture of weekdata"
+            ibmTableRow
+            >
+            <td *ngFor="let column of columns$ | async; let j = index" 
+            [ngSwitch]="column"
+            [class]="getClassName(column,fixture)">
+                <span *ngSwitchCase="'Fixture'">{{fixture.team_h_name}} v {{fixture.team_a_name}}</span>
+                <span *ngSwitchCase="'Score'">{{fixture.team_h_score}}-{{fixture.team_a_score}}</span>
+                <span *ngSwitchCase="'Result'">{{fixture.result}}</span>
+                <span *ngSwitchCase="'Odds'">{{fixture.odds?.value}}</span>
+                <span *ngSwitchDefault>
+                    <span *ngIf="fixture.predictions[column]">{{fixture.predictions[column].team_h_score}}-{{fixture.predictions[column].team_a_score}}</span>
+                </span>    
+            </td>
+        </tr>
+        <tr *ngIf="weekdata.length > 0">
+            <td
+            scope="col"
+            *ngFor="let column of columns$ | async"
+            >{{getTotal(column)}}</td>
+        </tr>
+    </tbody>
+</table>
+<button ibmButton="primary" (click)="reloadData">Reload</button>
+<!--
+<h1>Week</h1>
+<ul>
+    <li *ngFor="let fixture of weekdata; index as i; first as isFirst">
+            {{i}}/{{weekdata.length}}. <span>{{fixture.id}}</span>
+</ul>
+<ul>
+    <li *ngFor="let row of model.data; index as i; first as isFirst">
+        <span *ngFor="let item of row; let j = index">{{item.data}}</span>
+</ul>
+<h1>Predictors</h1>
+<ul>
+    <li *ngFor="let predictor of predictors; index as i; first as isFirst">
+            {{i}}/{{predictors.length}}. <span>{{predictor}}</span>
+</ul>
+<h1>Predictions</h1>
+<ul>
+    <li *ngFor="let prediction of predictions; index as i; first as isFirst">
+            {{i}}/{{predictions.length}}. <span>{{prediction.fixture_id}} {{prediction.predictor_id}}</span>
+</ul>
+<button  (click)="refreshPredictions()">Refresh Predictions</button>
+<h1>Odds</h1>
+<ul>
+    <li *ngFor="let odd of odds; index as i; first as isFirst">
+         {{i}}/{{odds.length}}. {{odd.fixture_id}} <span>{{odd.dsp_home}}</span>
+</ul>
+<h1>Teams</h1>
+<ul>
+    <li *ngFor="let team of teams; index as i; first as isFirst; count as c">
+         {{i}}/{{c}}. {{team.id}} <span>{{team.name}}</span>
+</ul>
+<h1>Fixtures</h1>
+<ul>
+    <li *ngFor="let fixture of fixtures; index as i; first as isFirst">
+         {{i}}/{{fixtures.length}}. {{fixture.id}} <span>{{fixture.code}}</span>
+</ul>
+-->

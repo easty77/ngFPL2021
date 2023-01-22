@@ -1,0 +1,93 @@
+.result_H {background-color: beige !important;text-align:center; }
+.result_A {background-color: lightgrey !important;text-align:center;}
+.result_D {background-color: orange !important;text-align:center;}
+
+.points_1 {background-color: lightgrey !important;text-align:center;}
+.points_3, .points_4, .points_5 {background-color: greenyellow !important;text-align:center;}
+
+.points_5::after {
+  content:" *"
+}
+.points_4::after {
+  content:" +"
+}
+
+.subtable {
+  display: table;
+}
+.subtable .row {
+  display: table-row;
+}
+.subtable .header {
+  font-weight: bold;
+}
+.subtable .cell {
+  display: table-cell;
+  padding: 5px;
+}
+
+.subtable .odds_row {
+  display: table-row;
+  line-height: 10px; 
+}
+.subtable .odds {
+  display: table-cell;
+  padding: 5px;
+  text-align: center;
+}
+.subtable .sequence {
+  display: table-cell;
+  padding: 5px;
+  text-align: center;
+  font-family: 'Courier';
+}
+
+.subtable .versus {
+  display: table-cell;
+  padding: 5px;
+  text-align: center;
+}
+.subtable .entry_row {
+  display: table-row;
+  line-height: 15px; 
+}
+.subtable .data_row {
+  display: table-row;
+  line-height: 10px; 
+}
+.subtable .data_header_row {
+  display: table-row;
+  line-height: 8px; 
+  background-color: pink;
+  text-align: center;
+}
+
+.odds {
+  font-weight: bold !important;
+  text-align: center !important;
+}
+.odds1 {
+  background-color: #98fb98 !important;
+}
+.odds2 {
+  background-color: #FFFF99 !important;
+}
+.odds3 {
+  background-color: #FF7F7F !important;
+}
+
+.rank {
+  text-align: right !important;
+}
+.rank1 {
+  background-color: #98fb98 !important;
+}
+.rank2 {
+  background-color: #FFFF99 !important;
+}
+.rank3 {
+  background-color: #FF7F7F !important;
+}
+.predictionInput {
+  width: 10px;
+}
