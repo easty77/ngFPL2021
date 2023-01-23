@@ -26,87 +26,23 @@ import {
 export class LandingPageComponent {
   // selected week
   selectedWeek: number = 1;
-  weekFixtures: Fixture[] = [];
-
-  // full data 
-  fixtures: Fixture[] = [];
-  teams: Team[] = [];
-  odds: Odds[] = [];
-  predictions: Prediction[] = [];
-  predictors: String[] = [];
-  asyncTeams!:Observable<Team[]>;
-
-	model: TableModel = new TableModel();
   weekdata: Fixture[] = [];
-  title: string = "Title";
-  description: string = "Description";
   columns$ : Observable<string[]>;
 
-  constructor(private fixtureService: FixturesService,
-    private flService: FantasyLeagueService,
-    private oddsService: OddsService,
-    private predictionsService: PredictionsService,
-    private predictorsService: PredictorsService,
-    private resultsService: ResultsService) {
-    this.getFixtures();
-    this.getTeams();
-    this.getOdds();
-    this.getPredictions();
-    this.getPredictors();
-    //this.getWeekTable().subscribe(model => this.model = model);
+  constructor(private resultsService: ResultsService) {
     resultsService.weekData$.subscribe(weekdata => this.weekdata = weekdata);
-    //resultsService.weekTable$.subscribe(model => this.model = model);
-    //resultsService.setWeekNumber(this.selectedWeek);
     this.columns$ = resultsService.columns$;
   }
 
-  getFixtures(): void {
-    this.fixtureService.allFixtures$
-        .subscribe(fixtures => {
-          this.fixtures = fixtures.sort((a,b) => a.id - b.id);
-          this.weekFixtures = this.getWeekFixtures();
-        });
-  }
-  getWeekFixtures():Fixture[] {
-    console.log("getWeekFixtures: " + this.selectedWeek);
-    return this.fixtures.filter(f => f.event === this.selectedWeek);
-  }
-  getTeams():void {
-    console.log("getTeams");
-    this.flService.getTeams()
-      .subscribe(teams => this.teams = teams);
-  }
-  getOdds():void {
-    this.oddsService.getOdds()
-      .subscribe(odds => this.odds = odds);
-  }
-  getPredictions():void {
-    this.predictionsService.allPredictions$
-      .subscribe(predictions => this.predictions = predictions);
-  }
-  refreshPredictions():void {
-    this.predictionsService.refreshPredictions();
-  }
-  getPredictors():void {
-    this.predictorsService.getPredictors()
-      .subscribe(predictors => this.predictors = predictors);
-  }
   reloadData():void {
     this.resultsService.reloadData();
   }
-/*  getWeekData():Observable<Fixture[]> {
-    return this.resultsService.getWeekData(this.selectedWeek);
-  }
-  getWeekTable():Observable<TableModel> {
-    return this.resultsService.getWeekTable(this.selectedWeek);
-  } */
   selectWeek(week:string) {
     console.log(week)
     this.setWeek(parseInt(week, 10));
   } 
   setWeek(weekNumber:number) {
     this.selectedWeek = weekNumber;
-    this.weekFixtures = this.getWeekFixtures();
     this.resultsService.setWeekNumber(weekNumber);
   }
   getClassName(column:string, fixture:Fixture): string {
@@ -224,6 +160,6 @@ getTotalPoints(predictor:string) : string {
         return acc;
       }
     }, 0);
-    return nGoals/nMatches;
+    return Math.round(10 * nGoals/nMatches)/10
   }
 }

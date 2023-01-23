@@ -16,8 +16,8 @@ export class FixturesService {
     shareReplay(),
   );
 
-  getFixtures(): Observable<Fixture[]> {
-    return this.http.get<Fixture[]>(environment.fixturesUrl);
+  getCompletedFixtures(): Observable<Fixture[]> {
+    return this.allFixtures$.pipe(map(fixtures => fixtures.filter(f => f.finished === true)));
   }
 
   public refreshFixtures() {
@@ -28,19 +28,20 @@ export class FixturesService {
     private http: HttpClient) { }
 
   getWeekFixtures(weekNumber:number): Observable<Fixture[]> {
-    return this.allFixtures$.pipe(map(fixtures => fixtures.filter(f => f.event === weekNumber).sort((a,b) => {
-      if (a.kickoff_time !== undefined && b.kickoff_time && a.kickoff_time > b.kickoff_time) {
-        return 1;
+    return this.allFixtures$.pipe(map(fixtures => fixtures.filter(f => f.event === weekNumber).sort(this.sortFixtures)));
+  }
+  private sortFixtures(a: Fixture, b: Fixture): number {
+    if (a.kickoff_time !== undefined && b.kickoff_time && a.kickoff_time > b.kickoff_time) {
+      return 1;
+    }
+    else if (a.kickoff_time !== undefined && b.kickoff_time && b.kickoff_time > a.kickoff_time) {
+      return -1;
+    }
+    else {
+      if (a.team_h_name !== undefined && b.team_h_name !== undefined) {
+        return a.team_h_name.localeCompare(b.team_h_name)
       }
-      else if (a.kickoff_time !== undefined && b.kickoff_time && b.kickoff_time > a.kickoff_time) {
-        return -1;
-      }
-      else {
-        if (a.team_h_name !== undefined && b.team_h_name !== undefined) {
-          return a.team_h_name.localeCompare(b.team_h_name)
-        }
-      }
-      return 0;
-    })));
+    }
+    return 0;
   }
 }

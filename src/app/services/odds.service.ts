@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject, exhaustMap, shareReplay } from 'rxjs';
 import { Odds } from '../datatypes/odds';
 import { DataTable } from '../datatypes/datatable';
 import { environment } from '../../environments/environment';
@@ -10,22 +10,26 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class OddsService {
+  // don't really need to refresh this data, but the BehaviorSubject also seems to avoid an http call
+  // when getWeekOdds is called
+  // perhaps should setWeek (like for Results), but would also need setMatch?
+  private fetch$ = new BehaviorSubject<void>(undefined);
 
-  odds$: Observable<Odds[]>;
+  public allOdds$: Observable<Odds[]> = this.fetch$.pipe(
+    exhaustMap(() => this.http.get<DataTable>(environment.oddsUrl).pipe(map(odata =>odata.rowdata.map(o => {o.rank = this.rankOdds([o.home, o.draw, o.away]); return o;})))),
+    shareReplay(),
+  );
 
   constructor(
     private http: HttpClient) { 
-      this.odds$ = this.http.get<DataTable>(environment.oddsUrl).pipe(map(odata =>odata.rowdata.map(o => {o.rank = this.rankOdds([o.home, o.draw, o.away]); return o;})));
-    }
+     }
 
-  getOdds(): Observable<Odds[]> {
-    return this.odds$
-  }
   getMatchOdds(id:number): Observable<Odds | undefined> {
-    return this.odds$.pipe(map(odds => odds.find(o => o.fixture_id === id)));
+    return this.allOdds$.pipe(map(odds => odds.find(o => o.fixture_id === id)));
   }
   getWeekOdds(id:number): Observable<Odds[] | undefined> {
-    return this.odds$.pipe(map(odds => odds.filter(o => o.event === id)));
+    console.log("In getWeekOdds");
+    return this.allOdds$.pipe(map(odds => odds.filter(o => o.event === id)));
   }
 private rankOdds(arr:any[]) {
     return this.rankArray(arr, true).join('');

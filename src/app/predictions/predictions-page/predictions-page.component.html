@@ -1,1 +1,44 @@
-<p>predictions-page works!</p>
+<ibm-select #display_type label="Type" value="points">
+    <option value="points">Points</option>
+    <option value="correct">#Correct</option>
+    <option value="profit">Profit</option>
+</ibm-select>
+<table ibmTable [sortable]="false" style="width: 100%;">
+    <thead ibmTableHead>
+        <tr>
+            <th
+                scope="col"
+                *ngFor="let column of columns$ | async"
+                >{{column}}
+            </th>
+        </tr>
+    </thead>
+    <tbody ibmTableBody>
+        <tr
+            *ngFor="let event of predictionsdata"
+            ibmTableRow
+            >
+            <td *ngFor="let column of columns$ | async; let j = index" 
+            [ngSwitch]="column"
+            [class]="getClassName(column, event, display_type.value)">
+                <span *ngSwitchCase="'Event'">{{event.event}}</span>
+                <span *ngSwitchCase="'Result'">{{event.result}}</span>
+                <span *ngSwitchCase="'Odds'">{{event.odds}}</span>
+                <span *ngSwitchDefault>
+                    <span *ngIf="event.predictions[column]" [ngSwitch]="display_type.value">
+                            <span *ngSwitchCase="'points'">{{event.predictions[column].points.value}}</span>
+                            <span *ngSwitchCase="'correct'">{{event.predictions[column].correct.value}}</span>
+                            <span *ngSwitchCase="'profit'" [title]="event.predictions[column].profit.display">{{event.predictions[column].profit.value | number : '1.2-2'}}</span>
+                    </span>
+                </span>    
+            </td>
+        </tr>
+        <tr *ngIf="predictionsdata.length > 0">
+            <td
+            scope="col"
+            *ngFor="let column of columns$ | async"
+            >{{column}} Total</td>
+        </tr>
+    </tbody>
+</table>
+

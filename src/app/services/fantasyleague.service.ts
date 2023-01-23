@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject, exhaustMap, shareReplay } from 'rxjs';
 import { Team } from '../datatypes/team';
 import { FantasyLeagueData } from '../datatypes/fantasyleaguedata';
 import { environment } from '../../environments/environment';
@@ -11,12 +11,18 @@ import { map } from 'rxjs/operators';
 })
 export class FantasyLeagueService {
   // data static over course of a season - no need to provide refresh
-  teams$ : Observable<Team[]>;
+ // don't really need to refresh this data, but the BehaviorSubject also seems to avoid an http call
+  // when getWeekOdds is called
+  // perhaps should setWeek (like for Results), but would also need setMatch?
+  private fetch$ = new BehaviorSubject<void>(undefined);
 
-  constructor(
-    private http: HttpClient) 
+  public teams$: Observable<Team[]> = this.fetch$.pipe(
+    exhaustMap(() => this.http.get<FantasyLeagueData>(environment.bootstrapUrl).pipe(map((fldata:FantasyLeagueData) =>fldata.teams))),
+    shareReplay(),
+  );
+  constructor(private http: HttpClient) 
     { 
-      this.teams$ = this.http.get<FantasyLeagueData>(environment.bootstrapUrl).pipe(map((fldata:FantasyLeagueData) =>fldata.teams));
+      console.log("In FantasyLeagueService constructor")
     }
     
   getTeams(): Observable<Team[]> {
