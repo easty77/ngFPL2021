@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -7,7 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 
 // carbon-components-angular default imports
-import { UIShellModule, IconModule } from 'carbon-components-angular';
+import { UIShellModule } from 'carbon-components-angular';
 
 @NgModule({
   declarations: [
@@ -18,8 +18,10 @@ import { UIShellModule, IconModule } from 'carbon-components-angular';
     BrowserModule,
     AppRoutingModule,
     UIShellModule,
-    IconModule,
     HttpClientModule,
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   bootstrap: [AppComponent]
 })

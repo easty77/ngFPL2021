@@ -1,7 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { UIShellModule } from 'carbon-components-angular/ui-shell/ui-shell.module';
+import { HeaderModule } from 'carbon-components-angular/ui-shell';
+// https://stackoverflow.com/a/40407697/2070127 for <ibm-header> not defined
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { HeaderComponent } from './header/header.component';
 
@@ -9,13 +11,13 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule, HeaderModule
       ],
       declarations: [
         AppComponent,
         HeaderComponent
       ],
-    }).compileComponents();
+        }).compileComponents();
   });
 
   it('should create the app', () => {
@@ -40,5 +42,5 @@ describe('AppComponent', () => {
 
 TestBed.configureTestingModule({
   declarations: [HeaderComponent],
-  imports: [UIShellModule]
+  imports: [HeaderModule],
 });
