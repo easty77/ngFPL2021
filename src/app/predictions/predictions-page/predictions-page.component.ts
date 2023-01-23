@@ -27,4 +27,27 @@ export class PredictionsPageComponent {
     }
     return "";
   }
+  getTotal(column:string, display_type:string): string {
+    if (column === 'Event') {
+      return "Total";
+    }
+    else if (column !== 'Result' && column !== 'Odds') {
+      return this.getPredictorTotal(column, display_type).toString();
+    }
+    else {
+      return "";
+    }
+  }
+  getPredictorTotal(predictor:string, display_type:string) : number {
+    console.log("getPredictorTotal: " + predictor)
+    return this.predictionsdata.reduce((acc, value) => {
+      let prediction: EventPredictor | undefined = value.predictions[predictor];
+      if ( prediction !== undefined && display_type in prediction) {
+        return acc + prediction[display_type as keyof EventPredictor].value;
+      }
+      else {
+        return acc;
+      }
+      }, 0);
+  }
 }

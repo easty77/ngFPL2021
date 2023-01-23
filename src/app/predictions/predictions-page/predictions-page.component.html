@@ -37,7 +37,7 @@
             <td
             scope="col"
             *ngFor="let column of columns$ | async"
-            >{{column}} Total</td>
+            >{{display_type.value === 'profit' ? (getTotal(column, display_type.value) | number : '1.2-2') : getTotal(column, display_type.value)}}</td>
         </tr>
     </tbody>
 </table>
