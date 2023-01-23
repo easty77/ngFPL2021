@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { SelectModule } from 'carbon-components-angular/select';
 import { TableModule } from 'carbon-components-angular/table';
 
@@ -11,7 +11,7 @@ describe('PredictionsPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, SelectModule, TableModule], 
+      imports: [HttpClientModule, SelectModule, TableModule], 
       declarations: [ PredictionsPageComponent ]
     })
     .compileComponents();
