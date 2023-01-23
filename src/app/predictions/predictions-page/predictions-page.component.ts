@@ -32,15 +32,15 @@ export class PredictionsPageComponent {
       return "Total";
     }
     else if (column !== 'Result' && column !== 'Odds') {
-      return this.getPredictorTotal(column, display_type).toString();
+      return this.getPredictorTotal(column, display_type);
     }
     else {
       return "";
     }
   }
-  getPredictorTotal(predictor:string, display_type:string) : number {
+  getPredictorTotal(predictor:string, display_type:string) : string {
     console.log("getPredictorTotal: " + predictor)
-    return this.predictionsdata.reduce((acc, value) => {
+    let total: number= this.predictionsdata.reduce((acc, value) => {
       let prediction: EventPredictor | undefined = value.predictions[predictor];
       if ( prediction !== undefined && display_type in prediction) {
         return acc + prediction[display_type as keyof EventPredictor].value;
@@ -49,5 +49,11 @@ export class PredictionsPageComponent {
         return acc;
       }
       }, 0);
+      if (display_type === 'profit') {
+        return total.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+      }
+      else {
+        return total.toString();
+      }
   }
 }
