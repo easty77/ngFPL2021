@@ -1,7 +1,7 @@
 <ibm-select #weeks (change)="selectWeek(weeks.value)" label="Week">
     <option *ngFor="let item of [].constructor(38); let i = index" [value]="i+1">{{i+1}}</option>
 </ibm-select>
-<table ibmTable [sortable]="false" style="width: 100%;">
+<table ibmTable [sortable]="false" style="width: 100%;" size="sm">
     <thead ibmTableHead>
         <tr>
             <th
