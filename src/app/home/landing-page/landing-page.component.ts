@@ -38,6 +38,7 @@ export class LandingPageComponent {
     this.resultsService.reloadData();
   }
   selectWeek(week:string) {
+    // called by onchange on week select
     console.log(week)
     this.setWeek(parseInt(week, 10));
   } 

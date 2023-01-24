@@ -24,4 +24,20 @@ describe('LandingPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('selectWeek should change week number', () => {
+    expect(component.selectedWeek)
+      .withContext('1 to start')
+      .toEqual(1);
+    const bannerElement: HTMLElement = fixture.nativeElement;
+    const sel = bannerElement.querySelector('select')!;
+    expect(sel.value)
+      .withContext('retrieve from select')
+      .toEqual('1');
+
+    component.setWeek(20);
+    expect(component.selectedWeek)
+      .withContext('reset to 20')
+      .toEqual(20);
+  });
+
 });
