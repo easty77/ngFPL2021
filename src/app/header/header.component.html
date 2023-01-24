@@ -5,4 +5,5 @@
       <ibm-header-item [route]="['/predictions']">Predictions</ibm-header-item>
       <ibm-header-item [route]="['/admin']">Admin</ibm-header-item>
     </ibm-header-navigation>
+    <img *ngIf="loginService.isLoggedIn()" [src]="loginService.getPicture()" width="50" height="50" />
 </ibm-header>

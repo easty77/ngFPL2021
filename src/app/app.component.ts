@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component  } from '@angular/core';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ngFPL2021';
+
+  constructor(
+    public loginService: LoginService
+  ) 
+  {
+    console.log(this.loginService.isLoggedIn());
+  }
 }

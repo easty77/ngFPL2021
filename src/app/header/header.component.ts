@@ -1,4 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
+import { LoginService } from '../services/login.service';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { Component, HostBinding } from '@angular/core';
 export class HeaderComponent {
   @HostBinding('class.cds--header') headerClass = true;
 
-  constructor() {}
+  constructor(public loginService: LoginService) {}
 
   ngOnInit() {
   }

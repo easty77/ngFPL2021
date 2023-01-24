@@ -1,4 +1,11 @@
 <app-header></app-header>
+<h2 class="text-center mb-4">Login with Facebook in Angular</h2>
+<div *ngIf="!loginService.isLoggedIn(); else loggedOut">
+  <button type="button" (click)="loginService.loginWithFacebook()" ibmButton="primary">Sign In</button>
+</div>
+<ng-template #loggedOut>
+<button type="button" (click)="loginService.signOut()" ibmButton="primary">Sign Out</button>
+</ng-template>
 <main class="cds--content">
   <router-outlet></router-outlet>
 </main>

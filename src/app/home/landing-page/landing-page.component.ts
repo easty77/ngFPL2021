@@ -1,14 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FixturesService } from '../../services/fixtures.service';
-import { FantasyLeagueService } from '../../services/fantasyleague.service';
-import { OddsService } from '../../services/odds.service';
-import { PredictionsService } from '../../services/predictions.service';
-import { PredictorsService } from '../../services/predictors.service';
 import { ResultsService } from '../../services/results.service';
 import { Fixture } from '../../datatypes/fixture';
-import { Team } from '../../datatypes/team';
-import { Odds } from '../../datatypes/odds';
 import { Prediction } from '../../datatypes/prediction';
 
 import {
