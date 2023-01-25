@@ -1,1 +1,5 @@
-<p>input-page works!</p>
+<h1>Fixtures for week {{weekNumber$ | async}}</h1>
+<ul>
+    <li *ngFor="let fixture of fixtures$ | async; index as i; ; count as c">
+         {{i}}/{{c}}. {{fixture.id}} <span>{{fixture.code}}</span>
+</ul>

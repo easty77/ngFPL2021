@@ -1,5 +1,6 @@
 import { Fixture } from './datatypes/fixture';
 import { Odds } from './datatypes/odds';
+import { Team } from './datatypes/team';
 import { ValueDisplay } from './datatypes/valuedisplay';
 
 export class Utils {
@@ -44,5 +45,15 @@ export class Utils {
     
         return profit;
       }
-    
+    static addTeamNames(fixtures: Fixture[], teams: Team[]) : Fixture[] {
+      fixtures.forEach((f:Fixture) => {
+        let hteam:Team | undefined = teams.find((t:Team) => t.id === f.team_h)
+        let ateam:Team | undefined = teams.find((t:Team) => t.id === f.team_a)
+        f.team_h_name = hteam?.name
+        f.team_a_name = ateam?.name
+        f.team_h_short_name = hteam?.short_name
+        f.team_a_short_name = ateam?.short_name
+      });
+      return fixtures;
+    }
 }
