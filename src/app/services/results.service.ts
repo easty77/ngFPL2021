@@ -50,14 +50,7 @@ export class ResultsService {
     ])
     .pipe(
       map(([fixtures, teams, predictions, odds]): Fixture[] => {
-        fixtures.forEach((f:Fixture) => {
-          let hteam:Team | undefined = teams.find((t:Team) => t.id === f.team_h)
-          let ateam:Team | undefined = teams.find((t:Team) => t.id === f.team_a)
-          f.team_h_name = hteam?.name
-          f.team_a_name = ateam?.name
-          f.team_h_short_name = hteam?.short_name
-          f.team_a_short_name = ateam?.short_name
-        })
+        fixtures = Utils.addTeamNames(fixtures, teams);
         let totalRow = {"id":"Total", "result":{"H":0, "D":0, "A":0}, odds:{"F1":0, "F2":0, "F3":0}, "score":0}
         let nFinished = 0
         fixtures.forEach(f => {
