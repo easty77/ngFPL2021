@@ -10,7 +10,10 @@ import {
   SocialLoginModule,
   SocialAuthServiceConfig,
 } from 'angularx-social-login';
-import { EuiButtonModule } from '@eui/components/eui-button';
+import { ButtonModule } from "carbon-components-angular";
+
+// carbon-components-angular default imports
+import { UIShellModule } from 'carbon-components-angular';
 
 @NgModule({
   declarations: [
@@ -20,9 +23,10 @@ import { EuiButtonModule } from '@eui/components/eui-button';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    UIShellModule,
     HttpClientModule,
     SocialLoginModule,
-    EuiButtonModule,
+    ButtonModule,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EuiTableModule } from '@eui/components/eui-table';
-import { EuiSelectModule } from '@eui/components/eui-select';
+import { ButtonModule, SelectModule, TableModule } from "carbon-components-angular";
 
 import { PredictionsRoutingModule } from './predictions-routing.module';
 import { PredictionsPageComponent } from './predictions-page/predictions-page.component';
@@ -14,8 +13,8 @@ import { PredictionsPageComponent } from './predictions-page/predictions-page.co
   imports: [
     CommonModule,
     PredictionsRoutingModule,
-    EuiTableModule,
-    EuiSelectModule,
+    TableModule,
+    SelectModule,
   ]
 })
 export class PredictionsModule { }

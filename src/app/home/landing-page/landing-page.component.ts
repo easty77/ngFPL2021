@@ -4,6 +4,10 @@ import { ResultsService } from '../../services/results.service';
 import { Fixture } from '../../datatypes/fixture';
 import { Prediction } from '../../datatypes/prediction';
 
+import {
+  TableModel,
+} from "carbon-components-angular/table";
+
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',

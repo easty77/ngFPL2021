@@ -6,7 +6,10 @@ import { FantasyLeagueService } from './fantasyleague.service';
 import { OddsService } from './odds.service';
 import { PredictionsService } from './predictions.service';
 import { PredictorsService } from './predictors.service';
-
+import { TableModel,
+  TableItem,
+  TableHeaderItem,
+ } from 'carbon-components-angular';
 import { Fixture } from '../datatypes/fixture';
 import { Team } from '../datatypes/team';
 import { Odds } from '../datatypes/odds';
